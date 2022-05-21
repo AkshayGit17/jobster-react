@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import main from '../assets/images/main.svg';
 import { Logo } from '../components';
@@ -21,7 +22,9 @@ const Landing = () => {
             dicta eos impedit nihil facilis laudantium, amet, ea saepe
             voluptatibus rerum eaque molestiae.
           </p>
-          <button className="btn">Login/Register</button>
+          <Link className="btn btn-hero" to="/register">
+            Login/Register
+          </Link>
         </div>
         <img src={main} alt="job hunt" className="img main-img" />
       </div>
@@ -39,7 +42,7 @@ const Wrapper = styled.main`
     align-items: center;
   }
   .container {
-    height: calc(100vh - var(--nav-height));
+    min-height: calc(100vh - var(--nav-height));
     display: grid;
     align-items: center;
     margin-top: -3rem;
