@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Logo, FormRow } from '../components';
 import { registerUser, loginUser } from '../store/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   name: '',
@@ -16,6 +17,7 @@ const initialState = {
 const Register = () => {
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const [values, setValues] = useState(initialState);
 
@@ -52,6 +54,14 @@ const Register = () => {
     });
   };
 
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+    }
+  }, [user]);
+
   return (
     <Wrapper>
       <form className="form" onSubmit={onFormSubmit}>
@@ -83,8 +93,8 @@ const Register = () => {
           onChange={onInputChange}
           labelText="password"
         />
-        <button type="submit" className="btn btn-block">
-          submit
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
+          {isLoading ? 'loading...' : 'submit'}
         </button>
         <p>
           {values.isMember ? 'Not a member yet?' : 'Already a member?'}
