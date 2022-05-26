@@ -5,10 +5,12 @@ import axiosInstance from '../utils/axiosInstance';
 import {
   addUserToLocalStorage,
   getUserFromLocalStorage,
+  removeUserFromLocalStorage,
 } from '../utils/localStorage';
 
 const initialState = {
   isLoading: false,
+  isSidebarOpen: false,
   user: getUserFromLocalStorage(),
 };
 
@@ -35,6 +37,16 @@ const loginUser = createAsyncThunk('user/loginUser', async (user, thunkAPI) => {
 const userSlice = createSlice({
   name: 'user',
   initialState,
+  reducers: {
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen;
+    },
+    logoutUser: (state) => {
+      state.user = null;
+      removeUserFromLocalStorage();
+      state.isSidebarOpen = false;
+    },
+  },
   extraReducers: {
     [registerUser.pending]: (state) => {
       state.isLoading = true;
@@ -67,5 +79,6 @@ const userSlice = createSlice({
   },
 });
 
+export const { toggleSidebar, logoutUser } = userSlice.actions;
 export { registerUser, loginUser };
 export default userSlice;
