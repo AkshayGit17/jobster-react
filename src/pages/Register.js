@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Logo, FormRow } from '../components';
-import { registerUser, loginUser } from '../store/userSlice';
+import { registerUser, loginUser } from '../store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 const initialState = {
@@ -60,7 +60,7 @@ const Register = () => {
         navigate('/');
       }, 2000);
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <Wrapper>

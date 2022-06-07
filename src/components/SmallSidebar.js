@@ -3,7 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Logo from './Logo';
-import { toggleSidebar } from '../store/userSlice';
+import { toggleSidebar } from '../store/user/userSlice';
 import NavLinks from './NavLinks';
 
 const SmallSidebar = () => {

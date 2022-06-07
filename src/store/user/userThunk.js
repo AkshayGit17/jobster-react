@@ -1,4 +1,4 @@
-import axiosInstance from '../utils/axiosInstance';
+import axiosInstance from '../../utils/axiosInstance';
 import { logoutUser } from './userSlice';
 
 export const registerUserThunk = async (user, thunkAPI) => {

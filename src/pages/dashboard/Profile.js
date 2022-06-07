@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { FormRow } from '../../components';
-import { updateUser } from '../../store/userSlice';
+import { updateUser } from '../../store/user/userSlice';
 
 const Profile = () => {
   const { isLoading, user } = useSelector((state) => state.user);

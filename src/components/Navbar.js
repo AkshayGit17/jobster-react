@@ -8,7 +8,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Logo } from '../components';
-import { toggleSidebar, logoutUser } from '../store/userSlice';
+import { toggleSidebar, logoutUser } from '../store/user/userSlice';
 import { useState } from 'react';
 
 const Navbar = () => {
