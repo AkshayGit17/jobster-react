@@ -5,7 +5,6 @@ const NavLinks = ({ toggle }) => {
   return (
     <div className="nav-links">
       {links.map((link) => {
-        console.log(link);
         const { id, text, path, icon } = link;
         return (
           <NavLink

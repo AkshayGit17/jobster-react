@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import { toast } from 'react-toastify';
 
 import { FormRow, FormRowSelect } from '../../components';
-import { handleInputChange, clearValues } from '../../store/job/jobSlice';
+import {
+  handleInputChange,
+  clearValues,
+  createJob,
+} from '../../store/job/jobSlice';
+import { useEffect } from 'react';
 
 const AddJob = () => {
   const {
@@ -14,8 +19,14 @@ const AddJob = () => {
     statusOptions,
     jobType,
     jobTypeOptions,
+    isEditing,
   } = useSelector((state) => state.job);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(handleInputChange({ name: 'jobLocation', value: user.location }));
+  }, [dispatch, user]);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +34,7 @@ const AddJob = () => {
       toast.error('please fill out all fields');
       return;
     }
+    dispatch(createJob({ company, position, jobLocation, status, jobType }));
   };
   const onInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +44,7 @@ const AddJob = () => {
   return (
     <Wrapper>
       <form className="form" onSubmit={onFormSubmit}>
-        <h3></h3>
+        <h3>{isEditing ? 'add job' : 'update job'}</h3>
         <div className="form-center">
           <FormRow
             type="text"
