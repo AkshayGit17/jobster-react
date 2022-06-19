@@ -9,7 +9,7 @@ const NavLinks = ({ toggle }) => {
         return (
           <NavLink
             to={path}
-            id={id}
+            key={id}
             className={({ isActive }) => {
               return isActive ? 'nav-link active' : 'nav-link';
             }}
