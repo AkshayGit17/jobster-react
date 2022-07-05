@@ -14,8 +14,6 @@ const JobsContainer = () => {
     dispatch(getAllJobs());
   }, [dispatch]);
 
-  console.log(jobs);
-
   if (isLoading) {
     return <Loading />;
   }

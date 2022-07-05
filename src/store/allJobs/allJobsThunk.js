@@ -4,11 +4,7 @@ export const getAllJobsThunk = async (_, thunkAPI) => {
   let url = '/jobs';
 
   try {
-    const resp = await axiosInstance.get(url, {
-      headers: {
-        Authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
-      },
-    });
+    const resp = await axiosInstance.get(url);
     return resp.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.msg);

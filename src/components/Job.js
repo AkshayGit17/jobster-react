@@ -4,6 +4,8 @@ import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from 'react-icons/fa';
 import moment from 'moment';
 
 import JobInfo from './JobInfo';
+import { deleteJob, setEditJob } from '../store/job/jobSlice';
+import { useDispatch } from 'react-redux';
 
 const Job = ({
   company,
@@ -14,6 +16,8 @@ const Job = ({
   _id,
   createdAt,
 }) => {
+  const dispatch = useDispatch();
+
   const date = moment(createdAt).format('MMM Do, YYYY');
 
   return (
@@ -34,10 +38,29 @@ const Job = ({
         </div>
         <footer>
           <div className="actions">
-            <Link to="/add-job" className="btn edit-btn">
+            <Link
+              to="/add-job"
+              className="btn edit-btn"
+              onClick={() =>
+                dispatch(
+                  setEditJob({
+                    company,
+                    position,
+                    status,
+                    jobType,
+                    jobLocation,
+                    editJobId: _id,
+                  })
+                )
+              }
+            >
               edit
             </Link>
-            <button type="button" className="btn delete-btn">
+            <button
+              type="button"
+              className="btn delete-btn"
+              onClick={() => dispatch(deleteJob(_id))}
+            >
               delete
             </button>
           </div>

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { getUserFromLocalStorage } from '../../utils/localStorage';
-import { createJobThunk } from './jobThunk';
+import { createJobThunk, deleteJobThunk, updateJobThunk } from './jobThunk';
 
 const initialState = {
   company: '',
@@ -17,6 +17,8 @@ const initialState = {
 };
 
 const createJob = createAsyncThunk('job/createJob', createJobThunk);
+const deleteJob = createAsyncThunk('job/deleteJob', deleteJobThunk);
+const updateJob = createAsyncThunk('job/updateJob', updateJobThunk);
 
 const jobSlice = createSlice({
   name: 'job',
@@ -32,6 +34,13 @@ const jobSlice = createSlice({
         jobLocation: getUserFromLocalStorage()?.location || '',
       };
     },
+    setEditJob: (state, { payload }) => {
+      return {
+        ...state,
+        ...payload,
+        isEditing: true,
+      };
+    },
   },
   extraReducers: {
     [createJob.pending]: (state) => {
@@ -39,16 +48,33 @@ const jobSlice = createSlice({
     },
     [createJob.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      toast.success('job created');
+      toast.success('Success! job created');
     },
     [createJob.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+    [deleteJob.fulfilled]: (state, { payload }) => {
+      toast.success(payload);
+    },
+    [deleteJob.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
+    [updateJob.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateJob.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.success('success! job updated');
+    },
+    [updateJob.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload);
     },
   },
 });
 
-export const { handleInputChange, clearValues } = jobSlice.actions;
-export { createJob };
+export const { handleInputChange, clearValues, setEditJob } = jobSlice.actions;
+export { createJob, deleteJob, updateJob };
 
 export default jobSlice;
