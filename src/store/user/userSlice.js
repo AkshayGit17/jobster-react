@@ -10,6 +10,7 @@ import {
   registerUserThunk,
   loginUserThunk,
   updateUserThunk,
+  clearStoreThunk,
 } from './userThunk';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
 const registerUser = createAsyncThunk('user/registerUser', registerUserThunk);
 const loginUser = createAsyncThunk('user/loginUser', loginUserThunk);
 const updateUser = createAsyncThunk('user/updateUser', updateUserThunk);
+const clearStore = createAsyncThunk('user/clearStore', clearStoreThunk);
 
 const userSlice = createSlice({
   name: 'user',
@@ -81,9 +83,15 @@ const userSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
+    [clearStore.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+    },
+    [clearStore.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
   },
 });
 
 export const { toggleSidebar, logoutUser } = userSlice.actions;
-export { registerUser, loginUser, updateUser };
+export { registerUser, loginUser, updateUser, clearStore };
 export default userSlice;
